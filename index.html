@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FlowDesk · AI Productivity Assistant</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo">F</span><div><h1>FlowDesk</h1><small>AI Productivity Assistant</small></div></div>
+  <div class="meter" title="Estimated minutes saved vs doing the task manually"><b id="saved">0</b><span>min saved</span></div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="on" data-tab="email">✉️ Email</button>
+  <button data-tab="notes">📝 Meeting Notes</button>
+  <button data-tab="plan">🗓️ Planner</button>
+  <button data-tab="research">🔎 Research</button>
+  <button data-tab="chat">💬 Assistant</button>
+  <button data-tab="settings">⚙️ Settings</button>
+</nav>
+
+<main>
+<div class="notice" id="mode">Demo mode (offline templates). Add a free Gemini API key in Settings for full AI.</div>
+<div class="warn" id="pii" hidden></div>
+
+<section id="email" class="panel on">
+  <h2>Smart Email Generator</h2>
+  <div class="grid">
+    <label>Audience<select id="e-aud"><option>Client</option><option>Manager</option><option>Team</option></select></label>
+    <label>Tone<select id="e-tone"><option value="formal">Formal</option><option value="informal">Informal</option><option value="persuasive">Persuasive</option></select></label>
+    <label>Recipient name<input id="e-rec" placeholder="e.g. Ms Dlamini"></label>
+    <label>Your name<input id="e-me" placeholder="e.g. Thandi"></label>
+  </div>
+  <label>Purpose<input id="e-purpose" placeholder="e.g. Follow up on an overdue invoice"></label>
+  <label>Key points (one per line)<textarea id="e-points" rows="4" placeholder="Invoice #1042 was due 30 Sept&#10;Offer a payment plan&#10;Request reply by Friday"></textarea></label>
+  <button class="go" id="e-go">Generate email</button>
+  <div class="out" id="e-out"></div>
+</section>
+
+<section id="notes" class="panel">
+  <h2>Meeting Notes Summarizer</h2>
+  <label>Paste raw meeting notes<textarea id="n-in" rows="9" placeholder="Paste notes or a transcript..."></textarea></label>
+  <div class="row"><button class="go" id="n-go">Summarize</button><button class="ghost" id="n-sample">Load sample</button></div>
+  <div class="out" id="n-out"></div>
+</section>
+
+<section id="plan" class="panel">
+  <h2>AI Task Planner</h2>
+  <div class="grid">
+    <label>Start time<input type="time" id="p-start" value="08:00"></label>
+    <label>Hours available<input type="number" id="p-hours" value="8" min="1" max="12"></label>
+  </div>
+  <label>Tasks <small>(free text, or <code>task | urgency 1-5 | importance 1-5 | minutes</code>)</small>
+  <textarea id="p-in" rows="7" placeholder="Reply to client queries | 5 | 4 | 45&#10;Prepare monthly report | 3 | 5 | 90&#10;Team stand-up | 4 | 3 | 15"></textarea></label>
+  <button class="go" id="p-go">Build my plan</button>
+  <div class="out" id="p-out"></div>
+</section>
+
+<section id="research" class="panel">
+  <h2>AI Research Assistant</h2>
+  <label>Paste an article, report or topic<textarea id="r-in" rows="9" placeholder="Paste text to summarize, or type a topic to explain..."></textarea></label>
+  <label>Explain it for<select id="r-level"><option value="a busy executive">A busy executive</option><option value="a complete beginner">A complete beginner</option><option value="a technical specialist">A specialist</option></select></label>
+  <button class="go" id="r-go">Analyse</button>
+  <div class="out" id="r-out"></div>
+</section>
+
+<section id="chat" class="panel">
+  <h2>Workplace Assistant</h2>
+  <div class="chat" id="c-log"><div class="msg bot">Hi! I can help with emails, summaries, planning and research. What are you working on?</div></div>
+  <div class="row"><input id="c-in" placeholder="Ask anything work-related..." autocomplete="off"><button class="go" id="c-go">Send</button><button class="ghost" id="c-clear">Clear</button></div>
+</section>
+
+<section id="settings" class="panel">
+  <h2>Settings</h2>
+  <label>Gemini API key <small>(stored only in this browser; get one free at aistudio.google.com)</small><input id="s-key" type="password" placeholder="Paste key"></label>
+  <label>Model<select id="model"><option>gemini-2.0-flash</option><option>gemini-1.5-flash</option></select></label>
+  <div class="row"><button class="go" id="s-save">Save</button><button class="ghost" id="s-clear">Remove key</button></div>
+  <h3>Responsible AI</h3>
+  <ul class="plain">
+    <li>Outputs are drafts. Always review before sending or acting.</li>
+    <li>Do not paste confidential data, ID numbers or card numbers. FlowDesk warns when it detects them.</li>
+    <li>No server and no tracking: your text goes only to Google's Gemini API when a key is set.</li>
+    <li>AI can be wrong or biased. Verify facts, figures and dates.</li>
+  </ul>
+</section>
+</main>
+<footer>AI-generated content may contain errors. Review before use.</footer>
+<script src="prompts.js"></script>
+<script src="fallback.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
